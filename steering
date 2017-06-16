@@ -1,0 +1,61 @@
+class ULSD {
+  
+  public:
+
+  ULSD(void) {
+    collDist = 6000;
+  }
+
+  boolean isCollision(void) {
+
+    pinMode(A0, OUTPUT); 
+    digitalWrite(A0, HIGH); 
+    delayMicroseconds(10);
+    digitalWrite(A0, LOW);
+         
+    pinMode(A0, INPUT); // вход 
+    int sensorVal=pulseIn(A0, HIGH); // замеряем длину импульса 
+    
+    return sensorVal <= collDist; 
+  }
+
+  private:
+
+  unsigned collDist;
+};
+
+class STRBase {
+  public:
+
+  void setup(void) {
+    pinMode(2, OUTPUT);
+    pinMode(3, OUTPUT);
+  }
+  
+  void straight(void) {
+    digitalWrite(2, HIGH);
+    digitalWrite(3, HIGH);
+  }
+
+  void steerLeft(void) {
+    digitalWrite(2, LOW);
+    digitalWrite(3, HIGH);
+  }
+};
+
+ULSD sensor;
+STRBase robot;
+
+void setup() {
+  // put your setup code here, to run once:
+  robot.setup();
+}
+
+void loop() {
+  if (sensor.isCollision()) {
+    robot.steerLeft();
+    
+  } else {
+    robot.straight();
+  }
+}
