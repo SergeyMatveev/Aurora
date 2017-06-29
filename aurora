@@ -1,0 +1,90 @@
+
+const int EchoPin=2;//
+const int TrigPin=3;//
+
+const int in1=4;//
+const int in2=5;
+const int in3=6;
+const int in4=7;
+int EN1 = 8;
+int EN2 = 9;
+
+int currDist=30;//
+
+int i;
+
+void setup(){
+
+Serial.begin(9600);//
+
+pinMode(EchoPin,INPUT);//
+//for (int i=3;i<=7;i++){
+//pinMode(i,OUTPUT);//
+//}
+
+  pinMode (EN1, OUTPUT);
+  pinMode (in1, OUTPUT);
+  pinMode (in2, OUTPUT);
+  pinMode (EN2, OUTPUT);
+  pinMode (in4, OUTPUT);
+  pinMode (in3, OUTPUT);
+
+}
+
+//
+void loop(){
+
+currDist=MeasuringDistance();//
+
+if(currDist>40){
+nodanger();
+}
+else if(currDist<30){
+lturn();
+}
+}
+
+
+//
+long MeasuringDistance() {
+long duration;
+pinMode(TrigPin, OUTPUT);
+digitalWrite(TrigPin, LOW);
+delayMicroseconds(2);
+digitalWrite(TrigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(TrigPin, LOW);
+
+pinMode(EchoPin, INPUT);
+duration = pulseIn(EchoPin, HIGH);
+
+return duration / 58;
+}
+
+//
+void nodanger(){
+digitalWrite(in1, HIGH);
+digitalWrite(in2, LOW);
+digitalWrite(in3, LOW);
+digitalWrite(in4, HIGH); 
+      analogWrite(EN1, 150);
+      analogWrite(EN2, 150);
+
+return;
+}
+
+//
+void lturn(){
+digitalWrite(in1, HIGH);
+digitalWrite(in2, LOW);
+digitalWrite(in3, HIGH);
+digitalWrite(in4, LOW); 
+
+
+return;
+}
+
+
+
+
+  
