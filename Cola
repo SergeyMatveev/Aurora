@@ -1,0 +1,35 @@
+/*
+  Obstacle avoidance code for autonomous car
+  
+  created 07 Feb 2018
+  by Sergey Matveev
+*/
+
+//Motors on left side
+int Left_Side_Motor_PinA = 2;
+int Left_Side_Motor_PinB = 3;
+int Left_Side_Speed_Control_Pin = 4;
+
+//Motors on right side
+int Right_Side_Motor_PinA = 5;
+int Right_Side_Motor_PinB = 6;
+int Right_Side_Speed_Control_Pin = 7;
+
+
+
+void setup() {
+  pinMode(Left_Side_Motor_PinA, OUTPUT);
+  pinMode(Left_Side_Motor_PinB, OUTPUT);
+  pinMode(Left_Side_Speed_Control_Pin, OUTPUT);
+  pinMode(Right_Side_Motor_PinA, OUTPUT);
+  pinMode(Right_Side_Motor_PinB, OUTPUT);
+  pinMode(Right_Side_Speed_Control_Pin, OUTPUT);
+}
+
+void loop() {
+  digitalWrite (Left_Side_Motor_PinA, LOW);
+  digitalWrite (Left_Side_Motor_PinB, HIGH);
+  digitalWrite (Right_Side_Motor_PinA, LOW);
+  digitalWrite (Right_Side_Motor_PinB, HIGH);
+  
+}
