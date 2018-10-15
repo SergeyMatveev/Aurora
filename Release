@@ -1,22 +1,79 @@
-const int FwdPin1 = 5; //Forward Motor Pin
-const int BwdPin1 = 6;  //Backward Motor Pin
-const int FwdPin2 = 7; //Forward Motor Pin
-const int BwdPin2 = 8;  //Backward Motor Pin
 
-void setup()
-{
+#define L_sensor A0 // Left sensor
+#define R_sensor A1 // Right sensor
+#define F_sensor A3 // Forward sensor
+
+const int FwdPin1 = 6; //Forward Motor Pin
+const int BwdPin1 = 5;  //Backward Motor Pin
+const int FwdPin2 = 8; //Forward Motor Pin
+const int BwdPin2 = 7;  //Backward Motor Pin
+float volts1 = 0;
+float volts2 = 0;
+float volts3 = 0;
+int L_distance = 0;
+int R_distance = 0;
+int F_distance = 0;
+
+void setup() {
+  Serial.begin(9600); // start the serial port
   pinMode(FwdPin1, OUTPUT);
   pinMode(BwdPin1, OUTPUT);
   pinMode(FwdPin2, OUTPUT);
   pinMode(BwdPin2, OUTPUT);
 }
 
-void loop()
-{
+void loop() {
+  volts1 = analogRead(L_sensor)*0.0048828125;  // value from L_sensor * (5/1024)
+  L_distance = 13*pow(volts1, -1); // worked out from datasheet graph
 
-    analogWrite(FwdPin1,255);  //Send instructions to Forward motor pin
-    
-    analogWrite(FwdPin2,255);  //Send instructions to Forward motor pin
+  volts2 = analogRead(R_sensor)*0.0048828125;  // value from R_sensor * (5/1024)
+  R_distance = 13*pow(volts2, -1); // worked out from datasheet graph
 
+  volts3 = analogRead(F_sensor)*0.0048828125;  // value from F_sensor * (5/1024)
+  F_distance = 13*pow(volts3, -1); // worked out from datasheet graph
 
+    Serial.println(L_distance);   // print the distance
+    Serial.println(R_distance);   // print the distance
+    Serial.println(F_distance);   // print the distance
+
+if (L_distance>10&R_distance>10&F_distance>12){
+FWD();
 }
+
+else{
+//LEFT();
+}
+}
+
+void FWD(){
+    analogWrite(FwdPin1,255);  //Send instructions to Forward motor pin
+    analogWrite(FwdPin2,255);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin1,0);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin2,0);  //Send instructions to Forward motor pin
+  //  delay(50);
+  //  analogWrite(FwdPin1,0);  //Send instructions to Forward motor pin
+ //   analogWrite(FwdPin2,0);  //Send instructions to Forward motor pin
+   // analogWrite(BwdPin1,0);  //Send instructions to Forward motor pin
+  //  analogWrite(BwdPin2,0);  //Send instructions to Forward motor pin
+  //  delay(60);
+}
+
+void LEFT(){
+    analogWrite(FwdPin1,0);  //Send instructions to Forward motor pin
+    analogWrite(FwdPin2,0);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin1,0);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin2,0);  //Send instructions to Forward motor pin
+    delay (20);
+    analogWrite(FwdPin1,0);  //Send instructions to Forward motor pin
+    analogWrite(FwdPin2,0);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin1,255);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin2,255);  //Send instructions to Forward motor pin
+    delay (30);
+    analogWrite(FwdPin1,255);  //Send instructions to Forward motor pin
+    analogWrite(FwdPin2,0);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin1,0);  //Send instructions to Forward motor pin
+    analogWrite(BwdPin2,255);  //Send instructions to Forward motor pin
+    delay (20);
+}
+
+
