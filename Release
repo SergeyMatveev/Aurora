@@ -1,0 +1,22 @@
+const int FwdPin1 = 5; //Forward Motor Pin
+const int BwdPin1 = 6;  //Backward Motor Pin
+const int FwdPin2 = 7; //Forward Motor Pin
+const int BwdPin2 = 8;  //Backward Motor Pin
+
+void setup()
+{
+  pinMode(FwdPin1, OUTPUT);
+  pinMode(BwdPin1, OUTPUT);
+  pinMode(FwdPin2, OUTPUT);
+  pinMode(BwdPin2, OUTPUT);
+}
+
+void loop()
+{
+
+    analogWrite(FwdPin1,255);  //Send instructions to Forward motor pin
+    
+    analogWrite(FwdPin2,255);  //Send instructions to Forward motor pin
+
+
+}
